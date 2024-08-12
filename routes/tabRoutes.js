@@ -11,11 +11,11 @@ const { authMiddleware } = require("../middleware/userAuthMiddleware");
 
 // ? Routes
 // Write
-router.route("/createTab").post(authMiddleware, createTab);
+router.route("/createTab").post(createTab);
 
 // Read
-router.route("/getAllTabsByUsers").get(authMiddleware, getAllTabsByUser);
+router.route("/getAllTabsByUsers").get(getAllTabsByUser);
 
-router.route("/:tabId").get(authMiddleware, getTabById);
+router.route("/:tabId").get(getTabById);
 
 module.exports = router;
