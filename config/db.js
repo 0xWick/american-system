@@ -3,12 +3,15 @@ const mongoose = require("mongoose");
 async function connectDB() {
   try {
     mongoose.set("strictQuery", false);
-    if (process.env.NODE_ENV == "dev") {
+    if (process.env.NODE_ENV == "prod") {
       const conn = await mongoose.connect(process.env.MONGO_URI_ATLAS);
       console.log(`MONGO DB Connected: ${conn.connection.host}`.cyan.underline);  
+      console.log("Node Environment is Dev")
     }
     else{
-      console.log("Node Environment is not Dev")
+      const conn = await mongoose.connect(process.env.MONGO_URI_LOCAL);
+      console.log(`MONGO DB Connected: ${conn.connection.host}`.cyan.underline);  
+      console.log("Node Environment is Local")
     }
 
   } catch (error) {
