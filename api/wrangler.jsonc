@@ -1,0 +1,28 @@
+{
+  // One Worker for American System: the API under /api/*, and the Wasuli Bhai app
+  // (Next.js static export in ../app/out) for everything else.
+  // Deploy: npm run deploy (builds the app, applies migrations, deploys).
+  "name": "wasuli",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-22",
+  "assets": {
+    "directory": "../app/out",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "american-system",
+      "database_id": "19830693-9496-4f27-bee0-6932fc18a78f",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // Test users and their demo friends are deleted after a day.
+  "triggers": { "crons": ["17 3 * * *"] },
+  "vars": { "DEMOS_PER_HOUR": "10" },
+  "routes": [{ "pattern": "wasuli.umarkhatana.com", "custom_domain": true }],
+  "observability": { "enabled": true }
+  // Secret: JWT_SECRET (wrangler secret put JWT_SECRET). Locally, put it in .dev.vars.
+}
